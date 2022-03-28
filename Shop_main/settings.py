@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     # user apps
     'APPS.categories',
     'APPS.accounts',
-    'APPS.store'
+    'APPS.store',
+    'APPS.cart',
 
 ]
 
