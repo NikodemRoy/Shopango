@@ -9,7 +9,7 @@ class Cart(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.cart_id
+        return str(self.cart_id)
     
 class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -17,5 +17,8 @@ class CartItem(models.Model):
     quantity = models.IntegerField()
     is_active = models.BooleanField(default=True)
 
+    def total_price(self):
+        return self.product.price *self.quantity
+
     def __str__(self):
-        return self.product
+        return str(self.product)

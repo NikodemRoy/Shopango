@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # custom context processor
                 'APPS.categories.context_processors.category_list',
+                'APPS.cart.context_processors.cart_item_count',
 
             ],
         },
