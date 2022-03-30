@@ -1,6 +1,7 @@
 from random import choices
 from django.db import models
 from django.urls import reverse
+from .managers import VariationManager
 
 from APPS.categories.models import Category
 
@@ -32,6 +33,7 @@ class Product(models.Model):
         # return reverse('product_detail', args=[self.category.slug, self.slug])
 
 
+
 class Variation(models.Model):
     variation_category_choice = (
         ('color', 'color'),
@@ -39,9 +41,11 @@ class Variation(models.Model):
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variation_category = models.CharField(max_length=100, choices=variation_category_choice)
-    varation_value = models.CharField(max_length=100)
+    variation_value = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now=True)
+
+    objects = VariationManager()
 
     def __str__(self):
         return str(self.product)

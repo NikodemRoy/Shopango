@@ -10,7 +10,7 @@ from APPS.store.models import Product
 
 def add_cart_product(request, product_id):
     color = request.GET['color']
-    size = request.GET['size']
+    # size = request.GET['size']
 
     product = Product.objects.get(id=product_id)
     cart_id = get_cart_id(request)
