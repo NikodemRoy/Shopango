@@ -28,7 +28,7 @@ def place_order(request, total=0, quantity=0):
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity )
         quantity += cart_item.quantity
-    tax = 0.19 * total
+    tax = round(0.19 * total, 2)
     grand_total = total  
     
     if request.method == 'POST':

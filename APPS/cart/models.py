@@ -22,7 +22,8 @@ class CartItem(models.Model):
     variations = models.ManyToManyField(Variation, blank=True)
 
     def total_price(self):
-        return self.product.price *self.quantity
+        price = self.product.price *self.quantity
+        return round(price, 2)
 
     def __str__(self):
         return str(self.product)
