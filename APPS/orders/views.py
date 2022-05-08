@@ -1,11 +1,11 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 
-from APPS.orders.models import Order, Payment
+from APPS.orders.models import Order, OrderProduct, Payment
 
 from .forms import OrderForm
 import datetime
-from APPS.cart.models import CartItem
+from APPS.cart.models import Cart, CartItem
 
 import json
 # Create your views here.
@@ -13,7 +13,8 @@ import json
 
 def payment(request):
     client_order = json.loads(request.body)
-
+    print(client_order)
+    
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=client_order['orderID'])
 
     payment = Payment(
@@ -27,6 +28,27 @@ def payment(request):
     order.payment = payment
     order.is_ordered = True
     order.save()
+    
+
+    # moving cart items to Order Product table
+
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        order_product = OrderProduct()
+        order_product.order_id = order.id
+        order_product.payment = payment
+        order_product.user_id = request.user.id
+        order_product.product_id = item.product_id
+        order_product.quantity = item.quantity
+        order_product.product_price = item.product.price
+        order_product.ordered = True
+        order_product.save()
+    # reducing the quantity after sale
+
+    # clearing cart
+
+    # sending order confirmation email
 
     return render(request, 'orders/payment.html')
 
