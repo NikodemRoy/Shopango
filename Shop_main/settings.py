@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'APPS.accounts',
     'APPS.store',
     'APPS.cart',
+    'APPS.orders'
 
 ]
 
@@ -134,9 +135,27 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "uploads"
 
+# added custom user model
 AUTH_USER_MODEL = 'accounts.Account'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'info',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
+# Email confirmation
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'roy.nikodem@gmail.com'
+EMAIL_HOST_PASSWORD = 'oqvcvhsjfrwkorlh'

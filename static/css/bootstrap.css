@@ -10153,3 +10153,23 @@ h3 {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
+/* 
+div[class^="col-"] {
+  padding-left: 2.5px;
+  padding-right: 2.5px;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+}
+
+.row {
+  margin-left: -2.5px;
+  margin-right: -2.5px;
+  padding-top: -2.5px;
+  padding-bottom: -2.5px;
+} */
+
+@media (min-width: 1300px) {
+  .container{
+      max-width: 1300px;
+  }
+}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y" style="min-height:84vh">
+
+{% if request.GET.command == 'verification' %}
+
+<div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 720px; margin-top:50px; font-size: medium;">
+    We have send verification email to you. Please check your emial adres <b>{{request.GET.email}}</b>
+    <br><br>
+    Alredy verified? <a href="{% url 'login' %}">Login</a>
+</div>
+
+{% else %}
+
+    <!-- ============================ COMPONENT LOGIN   ================================= -->
+        <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+          <div class="card-body">
+          <h4 class="card-title mb-4">Sign in</h4>
+          <form action="{% url 'login' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                 <input type="email" class="form-control" placeholder="Email Address" name="email" >
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" name="password" >
+              </div> <!-- form-group// -->
+              {% include 'includes/alert.html' %}
+
+              <!-- {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %} -->
+                
+                <!-- {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                 -->
+              
+              <div class="form-group">
+                  <a href="{% url 'resetpassword' %}" class="float-right">Forgot password?</a> 
+               
+              </div> <!-- form-group form-check .// -->
+              <div class="form-group">
+                    {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}"/>   
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+              </div> <!-- form-group// -->    
+          </form>
+          </div> <!-- card-body.// -->
+        </div> <!-- card .// -->
+    
+         <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
+         <br><br>
+    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+{% endif %}
+    
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+{% endblock content %}
+    

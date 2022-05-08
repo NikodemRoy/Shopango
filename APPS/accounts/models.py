@@ -12,7 +12,7 @@ class Account(AbstractBaseUser):
     
     first_name = models.CharField(max_length=48)
     last_name = models.CharField(max_length=48)
-    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
+    phone_number = PhoneNumberField(null=True, blank=True, unique=False)
 
     created_date = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
@@ -23,7 +23,7 @@ class Account(AbstractBaseUser):
     
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name',]
 
     objects = CustomAccountManager()
 
