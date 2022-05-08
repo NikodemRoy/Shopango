@@ -13,7 +13,7 @@ class Payment(models.Model):
     status = models.CharField(max_length=96)
     created_ad = models.DateTimeField(auto_now_add=True)
 
-    def __str_(self):
+    def __str__(self):
         return self.payment_id
 
 class Order(models.Model):
