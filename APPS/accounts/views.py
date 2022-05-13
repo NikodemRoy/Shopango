@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from APPS.accounts.models import Account
 from .forms import RegistrationForm
 from django.core.mail import EmailMessage
-
+from email.message import EmailMessage
 
 from APPS.cart.services import get_cart_id
 from APPS.cart.models import Cart, CartItem
