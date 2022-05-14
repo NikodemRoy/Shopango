@@ -197,8 +197,12 @@
                                 status: orderData.status,
                             }),
                         })
-                        // .then(response => response.json())
-                        // .then(data => console.log(data));
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success: ', data);
+                            console.log('Transaction Complited.');
+                            window.location.href = "{% url 'order_complite' %}" + '?order_number='+data.order_number+'&payment_id='+data.transID
+                        });
                 }
                 // When ready to go live, remove the alert and show a success message within this page. For example:
                 // const element = document.getElementById('paypal-button-container');

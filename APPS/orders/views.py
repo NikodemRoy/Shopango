@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from APPS.orders.models import Order, OrderProduct, Payment
 from APPS.store.models import Product
@@ -67,14 +67,25 @@ def payment(request):
     # sending order confirmation email
     user = request.user
     mail_subject = 'Thanks for your order!'
-    message = render_to_string('accounts/order_confirmation_email.html', {
+    message = render_to_string('orders/order_confirmation_email.html', {
         'user': user,
         'order':order
         })
-    to_email = request.user.email
+    to_email = order.email
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
 
+    # pars order data to JsonResponse
+    data = {
+        'order_number': order.order_number,
+        'transID': payment.payment_id,
+    }
+    return JsonResponse(data)
+    # return render(request, 'orders/payment.html')
+
+
+def order_complite(request):
+    return render(request, 'orders/order_complite.html')
 
 
     # for item in cart_items:
@@ -90,7 +101,7 @@ def payment(request):
 
 
 
-    return render(request, 'orders/payment.html')
+
 
 
 def place_order(request, total=0, quantity=0):
