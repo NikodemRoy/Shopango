@@ -85,7 +85,31 @@ def payment(request):
 
 
 def order_complite(request):
-    return render(request, 'orders/order_complite.html')
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered= True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        payment = Payment.objects.get(payment_id=transID)
+
+        subtotal = 0
+        for item in ordered_products:
+            subtotal += item.product_price * item.quantity 
+
+        context = {
+            'order':order,
+            'ordered_products': ordered_products,
+            'order_number': order.order_number,
+            'transID': payment.payment_id,
+            'status' : payment.status,
+            'subtotal' : subtotal
+        }
+        return render(request, 'orders/order_complite.html', context)
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('store')
+        # pass
 
 
     # for item in cart_items:
