@@ -172,3 +172,4 @@ cython_debug/
 templates/do_zrobienia/
 dodane.txt
 .vscode
+secret.py

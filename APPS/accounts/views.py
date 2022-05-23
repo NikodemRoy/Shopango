@@ -12,6 +12,8 @@ from .forms import RegistrationForm
 from django.core.mail import EmailMessage
 from email.message import EmailMessage
 
+from APPS.orders.models import Order
+
 from APPS.cart.services import get_cart_id
 from APPS.cart.models import Cart, CartItem
 
@@ -159,7 +161,10 @@ def activate(request, uidb64, token):
 @login_required(login_url='login')
 def dashboard(request):
     user = request.user
-    context = {}
+    print(f'This is user id: {user}')
+    orders = Order.objects.filter(user_id=user.id, is_ordered = True)
+    orders_count = orders.count()
+    context = {'user':user, 'orders':orders, 'orders_count':orders_count}
     return render(request, 'accounts/dashboard.html', context)
 
 
@@ -229,6 +234,14 @@ def new_password(request):
         else:
             return redirect('login')
     return render(request, 'accounts/new_password.html')
+
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user, is_ordered = True).order_by('-created_at')
+    context = {
+        'orders':orders
+    }
+    return render(request, 'accounts/my_orders.html', context)
 
 
 

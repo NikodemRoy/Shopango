@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from .managers import CustomAccountManager
@@ -35,4 +36,21 @@ class Account(AbstractBaseUser):
     
     def has_module_perms(self, add_label):
         return True
+    
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(Account, on_delete=models.CASCADE, db_index=True)
+    addres_1 = models.CharField(max_length=96, blank=True)
+    addres_2 = models.CharField(max_length=96, blank=True)
+    city = models.TextField(max_length=30, blank=True)
+    state = models.TextField(max_length=30, blank=True)
+    country = models.TextField(max_length=30, blank=True)
+
+    def __str__(self):
+        return self.user.first_name
+
+    def full_address(self):
+        return f'{self.addres_1} {self.addres_2}'
