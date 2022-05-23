@@ -1,3 +1,4 @@
+from email.policy import default
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
@@ -45,9 +46,10 @@ class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE, db_index=True)
     addres_1 = models.CharField(max_length=96, blank=True)
     addres_2 = models.CharField(max_length=96, blank=True)
-    city = models.TextField(max_length=30, blank=True)
-    state = models.TextField(max_length=30, blank=True)
-    country = models.TextField(max_length=30, blank=True)
+    profile_picture = models.ImageField(upload_to='user_profiles', default='user_profiles/default.png')
+    city = models.CharField(max_length=30, blank=True)
+    state = models.CharField(max_length=30, blank=True)
+    country = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.user.first_name

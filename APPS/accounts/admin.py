@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Account
 from .models import Profile
+
+from django.utils.html import format_html
 # Register your models here.
 
 
@@ -20,7 +22,13 @@ class AccountAdmin(UserAdmin):
     )
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'city', 'state', 'country')
+    def picture(self, object):
+        return format_html('<img src="{}"style="border-radius:50%"; hight="30"; width="30";>'.format(object.profile_picture.url))
+        
+    picture.short_description = "Profile Picture"
+    picture.allow_tags = True
+
+    list_display = ('picture', 'user','city', 'state', 'country')
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(Profile, ProfileAdmin)

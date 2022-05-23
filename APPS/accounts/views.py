@@ -1,14 +1,14 @@
 from django.http import HttpResponse
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from email.message import EmailMessage
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.utils.encoding import force_bytes
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
-from APPS.accounts.models import Account
-from .forms import RegistrationForm
+from APPS.accounts.models import Account, Profile
+from .forms import RegistrationForm, ProfileForm, AccountForm
 from django.core.mail import EmailMessage
 from email.message import EmailMessage
 
@@ -16,6 +16,7 @@ from APPS.orders.models import Order
 
 from APPS.cart.services import get_cart_id
 from APPS.cart.models import Cart, CartItem
+
 
 from django.contrib.auth.tokens import default_token_generator
 
@@ -242,6 +243,27 @@ def my_orders(request):
         'orders':orders
     }
     return render(request, 'accounts/my_orders.html', context)
+
+def eddit_profile(request):
+    userprofile = get_object_or_404(Profile, user=request.user)
+    if request.method == 'POST':
+        user_form = AccountForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profiles has been updated')
+            return redirect('eddit_profile')
+    else:
+        user_form = AccountForm(instance=request.user)
+        profile_form= ProfileForm(instance=userprofile)
+
+    context = {
+        'user_form':user_form,
+        'profile_form':profile_form,
+        'userprofile':userprofile
+    }
+    return render(request, 'accounts/eddit_profile.html', context)
 
 
 

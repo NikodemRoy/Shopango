@@ -15,4 +15,5 @@ urlpatterns = [
     path('new-password/', views.new_password, name="new_password"),
 
     path('my-orders/', views.my_orders, name="my_orders"),
+    path('eddit-profile/', views.eddit_profile, name="eddit_profile"),
 ]

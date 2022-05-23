@@ -1,6 +1,7 @@
+from dataclasses import fields
 from django import forms
-from .models import Account
-from django.core.exceptions import ValidationError
+from .models import Account, Profile
+# from django.core.exceptions import ValidationError
 from django.forms import ValidationError
 
 
@@ -41,3 +42,26 @@ class RegistrationForm(forms.ModelForm):
 
 class ResetPasswordForm(forms.ModelForm):
     pass
+
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('first_name', 'last_name', 'phone_number')
+        
+    def __init__(self, *args, **kwargs):
+        super(AccountForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+        
+
+class ProfileForm(forms.ModelForm):
+    profile_picture = forms.ImageField(required=False, error_messages={'Invalid':("Image files only")}, widget=forms.FileInput)
+
+    class Meta:
+        model = Profile
+        fields = ('addres_1', 'addres_2', 'city', 'state', 'country', 'profile_picture')
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
