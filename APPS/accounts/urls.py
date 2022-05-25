@@ -16,4 +16,6 @@ urlpatterns = [
 
     path('my-orders/', views.my_orders, name="my_orders"),
     path('eddit-profile/', views.eddit_profile, name="eddit_profile"),
+    path('change-password/', views.eddit_password, name="eddit_password"),
+    path('order-detail/<int:order_id>/', views.order_detail, name="order_detail"),
 ]

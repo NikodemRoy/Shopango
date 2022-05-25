@@ -25,7 +25,7 @@ class Product(models.Model):
     modifited_date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['created_date']
 
 
     def averageReview(self):
