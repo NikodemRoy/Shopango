@@ -19,3 +19,13 @@
 		</section>
 	</div><!-- //container -->
 </footer>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.thumb a').click(function(e){
+			e.preventDefault();
+			$('.main img').attr('src', $(this).attr("href"));
+		})
+	})
+</script>

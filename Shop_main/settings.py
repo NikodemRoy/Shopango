@@ -18,12 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-from secret import KEY
+import secret
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = KEY
+SECRET_KEY = secret.KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = secret.DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'APPS.accounts',
     'APPS.store',
     'APPS.cart',
-    'APPS.orders'
+    'APPS.orders',
+    #fake login
+    'admin_honeypot'
 
 ]
 
@@ -155,7 +157,8 @@ MESSAGE_TAGS = {
 # Email confirmation
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587 
+EMAIL_PORT = secret.EMAIL_PORT
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'roy.nikodem@gmail.com'
-EMAIL_HOST_PASSWORD = 'oqvcvhsjfrwkorlh'
+EMAIL_HOST_USER = secret.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = secret.EMAIL_HOST_PASSWORD
+
